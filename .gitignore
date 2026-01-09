@@ -1,0 +1,58 @@
+# =================================================================
+# TASKFLOW APP - GLOBAL GITIGNORE
+# =================================================================
+
+# === BACKEND: Java / Spring Boot (taskflow-backend) ===
+**/target/
+**/bin/
+**/out/
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+
+# Maven specific
+.mvn/wrapper/maven-wrapper.jar
+**/Help.md
+
+# === FRONTEND: Angular / Node (taskflow-frontend-web) ===
+**/node_modules/
+**/dist/
+**/.angular/
+**/tmp/
+**/out-tsc/
+**/bazel-out/
+**/files/
+npm-debug.log
+yarn-error.log
+package-lock.json
+
+# === IDEs / Editors ===
+# Eclipse
+**/.project
+**/.classpath
+**/.settings/
+**/*.launch
+.metadata/
+
+# IntelliJ
+**/.idea/
+*.iml
+*.iws
+
+# Visual Studio Code
+**/.vscode/*
+!**/.vscode/settings.json
+**/.history/
+
+# === DOCKER & ENVIRONMENT ===
+**/*.env
+docker-compose.override.yml
+**/mysql-data/
+
+# === SYSTEM FILES ===
+.DS_Store
+Thumbs.db
+desktop.ini

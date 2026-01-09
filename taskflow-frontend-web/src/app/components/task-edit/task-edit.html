@@ -1,0 +1,33 @@
+@if (task()) {
+<div class="container mt-4 ">
+  <div class="card shadow ">
+    <div class="card-header bg-primary text-white bg-dark">
+      <h2 class="mb-0">Modifica Task #{{ task().id }}</h2>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="onSave()">
+        <div class="mb-3">
+          <label class="form-label">Titolo</label>
+          <input type="text" class="form-control" name="title" [(ngModel)]="task().title">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Descrizione</label>
+          <textarea class="form-control" name="description" rows="3" maxlength="800"
+            [(ngModel)]="task().description"></textarea>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2">
+          <button type="button" class="btn btn-secondary" (click)="onCancel()">Annulla</button>
+          <button type="submit" class="btn btn-success">Salva Modifiche</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+} @else {
+<div class="text-center mt-5">
+  <div class="spinner-border text-primary" role="status"></div>
+  <p>Caricamento dati del task...</p>
+</div>
+}

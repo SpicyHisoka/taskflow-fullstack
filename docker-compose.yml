@@ -1,0 +1,27 @@
+services:
+  taskflow-db:
+    image: mysql:latest
+    container_name: taskflow-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: taskflow_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - taskflow_db_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: taskflow-phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: taskflow-db
+      MYSQL_ROOT_PASSWORD: root
+    depends_on:
+      - taskflow-db
+
+volumes:
+  taskflow_db_data:

@@ -1,0 +1,15 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
+  <div class="container-fluid">
+    <h2 class="navbar-brand mb-0">TaskFlow - Le mie Attività</h2>
+
+    <div class="navbar-nav">
+      <button class="nav-link btn btn-link" (click)="homeClick()">
+        <i class="bi bi-house-door"></i> Home
+      </button>
+
+      <button class="nav-link btn btn-link" [routerLink]="['/tasks/new-task']">
+        <i class="bi bi-plus-circle"></i> Nuova Task
+      </button>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,33 @@
+<div class="container mt-4">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white bg-dark">
+      <h5 class="mb-0">Nuova Task</h5>
+    </div>
+
+    <div class="card-body">
+      <form (ngSubmit)="addTask()">
+
+        <div class="mb-3">
+          <label class="form-label">Titolo</label>
+          <input type="text" class="form-control" name="title" [(ngModel)]="newTask.title" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Descrizione</label>
+          <textarea class="form-control" name="description" rows="3" maxlength="800"
+            [(ngModel)]="newTask.description"></textarea>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2">
+          <button type="button" class="btn btn-secondary" (click)="onCancel()">
+            Annulla
+          </button>
+
+          <button type="submit" class="btn btn-success">
+            Salva
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
