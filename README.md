@@ -1,5 +1,13 @@
 # TaskFlow App
 
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
+![Angular](https://img.shields.io/badge/angular-%23DD0031.svg?style=for-the-badge&logo=angular&logoColor=white)
+![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![Status](https://img.shields.io/badge/Status-In_Progress-orange?style=for-the-badge)
+![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)
+
 TaskFlow è una semplice applicazione Web Full-Stack per la gestione dei task.
 Il progetto utilizza un'architettura moderna basata su **Spring Boot 3** e **Angular 18+**.
 
