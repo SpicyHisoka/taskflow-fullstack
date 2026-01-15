@@ -1,7 +1,3 @@
-# =================================================================
-# TASKFLOW APP - GLOBAL GITIGNORE
-# =================================================================
-
 # === BACKEND: Java / Spring Boot (taskflow-backend) ===
 **/target/
 **/bin/
@@ -27,7 +23,25 @@
 **/files/
 npm-debug.log
 yarn-error.log
-package-lock.json
+
+# === MOBILE: React Native / Expo (taskflow-mobile) ===
+**/.expo/
+**/dist/
+**/web-build/
+**/expo-env.d.ts
+**/.metro-health-check*
+*.tsbuildinfo
+
+# Native Folders (create da Expo se fai il prebuild)
+**/ios/
+**/android/
+
+# Native Secrets & Keys
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
 
 # === IDEs / Editors ===
 # Eclipse
