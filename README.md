@@ -48,6 +48,30 @@ Il progetto si basa su un Backend condiviso tra Frontend Web e Frontend Mobile.
 - **npm**: Dipendenze ambienti di sviluppo e build del Frontend
 - **Git**: Versionamento con gestione monorepo
 
+### Architettura
+```mermaid
+flowchart TB
+	style A fill:#4DB6AC,stroke:#333,stroke-width:2px,color:#fff
+	style B fill:#FFB74D,stroke:#333,stroke-width:2px,color:#333
+	style C fill:#64B5F6,stroke:#333,stroke-width:2px,color:#fff
+	style D fill:#F48FB1,stroke:#333,stroke-width:2px,color:#333
+	style E fill:#AED581,stroke:#333,stroke-width:2px,color:#333
+	style F fill:#BA68C8,stroke:#333,stroke-width:2px,color:#fff
+	style Docker_Environment fill:#f0f0f0,stroke:#666,stroke-dasharray:5 5,color:#333
+
+	A[Angular Web<br>Port 4200] -->|REST API| C[Java Spring<br>Backend<br>Port 8080]
+	B[React Native App<br>Port 8082] -->|REST API| C
+
+	subgraph Docker_Environment [Ambiente Docker]
+		D[Docker Network]
+		E[MySQL<br>Port 3306]
+		F[phpMyAdmin<br>Port 8081]
+
+		D --- E
+		D --- F
+	end
+	C --> D
+```
 ---
 
 ## API Endpoints (REST)
