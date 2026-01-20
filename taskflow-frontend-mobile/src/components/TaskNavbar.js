@@ -53,18 +53,18 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 6,
     paddingHorizontal: 15,
-    backgroundColor: '#f4f7fb',   // azzurro-grigio chiaro
+    backgroundColor: '#f4f7fb',
   },
   filterRow: {
     flexDirection: 'row',
-    backgroundColor: '#e3e8f2',   // lilla molto soft
+    backgroundColor: '#e3e8f2',
     borderRadius: 14,
     height: 50,
   },
   animatedBox: {
     position: 'absolute',
     height: '100%',
-    backgroundColor: '#7b6cff',   // viola pastello moderno
+    backgroundColor: '#7b6cff',
     borderRadius: 14,
   },
   filterButton: {
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   },
   filterText: {
     fontWeight: 'bold',
-    color: '#6b6f85',   // grigio bluastro elegante
+    color: '#6b6f85',
   },
   activeFilterText: {
     color: '#ffffff',

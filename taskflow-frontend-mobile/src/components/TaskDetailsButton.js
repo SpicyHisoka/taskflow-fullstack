@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 16,
     fontWeight: '800',
-    color: '#2f2f3a',   // antracite soft
+    color: '#2f2f3a',
     letterSpacing: 0.2,
   },
   actionBtn: {
@@ -81,13 +81,13 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
   },
   editBtn: {
-    backgroundColor: '#877bf3',   // viola pastello
+    backgroundColor: '#877bf3',
   },
   saveBtn: {
-    backgroundColor: '#6fbf9b',   // verde menta
+    backgroundColor: '#6fbf9b',
   },
   deleteBtn: {
-    backgroundColor: '#ee6d6d',   // rosso pastello
+    backgroundColor: '#ee6d6d',
   }
 });
 

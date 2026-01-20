@@ -116,7 +116,7 @@ const TaskDetails = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f4f7fb',   // azzurro-grigio chiaro
+    backgroundColor: '#f4f7fb',
     padding: 20
   },
   textContainer: {
@@ -125,12 +125,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 36,
     fontWeight: 'bold',
-    color: '#2f2f3a',   // antracite soft
+    color: '#2f2f3a',
     marginBottom: 10
   },
   description: {
     fontSize: 18,
-    color: '#6b6f85',   // grigio bluastro elegante
+    color: '#6b6f85',
     lineHeight: 24
   },
   inputActive: {

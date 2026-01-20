@@ -16,7 +16,7 @@ const TaskItem = ({ item, onToggle }) => {
 
   const backgroundColor = animatedValue.interpolate({
     inputRange: [0, 1],
-    outputRange: ['#e6f0fb', '#e6f7f1']   // azzurro → verde menta pastello
+    outputRange: ['#e6f0fb', '#e6f7f1']
   });
 
   return (
@@ -25,7 +25,7 @@ const TaskItem = ({ item, onToggle }) => {
         <Ionicons
           name={item.status === 'DONE' ? "checkbox" : "square-outline"}
           size={24}
-          color={item.status === 'DONE' ? "#6fbf9b" : "#8b8fa5"}   // verde soft / grigio lilla
+          color={item.status === 'DONE' ? "#6fbf9b" : "#8b8fa5"}
           style={styles.checkboxIcon}
         />
       </TouchableOpacity>
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   taskTitle: {
     fontSize: 18,
     fontWeight: '500',
-    color: '#2f2f3a'   // grigio antracite soft
+    color: '#2f2f3a'
   }
 });
 

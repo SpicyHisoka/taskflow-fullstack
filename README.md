@@ -1,4 +1,4 @@
-# TaskFlow App
+# TaskFlow App AI
 
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
@@ -12,7 +12,7 @@
 ![Status](https://img.shields.io/badge/Status-In_Progress-orange?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)
 
-**TaskFlow** è una semplice applicazione Web Full-Stack per la gestione dei task.
+**TaskFlow** è una semplice applicazione Web Full-Stack per la gestione dei task, con la possiblità di generazione dei task tramite AI.<br>
 Il progetto si basa su un Backend condiviso tra Frontend Web e Frontend Mobile.
 
 - Web → **Angular 18+** (standalone components + signals)
@@ -23,11 +23,14 @@ Il progetto si basa su un Backend condiviso tra Frontend Web e Frontend Mobile.
 
 ### Backend
 - **Java 17+** & **Spring Boot 3.4.1**
+- **Spring Ai**: Integrazione nativa per l'orchestrazione di modelli LLM
+- **Google Gemini AI**: Utilizzato per la generazione automatica dei task
 - **JPA**: Standard Java per salvare dati
 - **Hibernate**: Motore ORM per mappare classi e tabelle
 - **Spring Data JPA**: Gestione semplice di repository e query
 - **MySQL 8**: Database ospitato su container Docker
 - **Architettura Layered**: Controller → Service → Repository → Entity
+
 
 ### Frontend Web
 - **Angular 18+**: Utilizzo di **Standalone Components**
@@ -51,31 +54,36 @@ Il progetto si basa su un Backend condiviso tra Frontend Web e Frontend Mobile.
 ### Architettura
 ```mermaid
 flowchart TB
-	style A fill:#4DB6AC,stroke:#333,stroke-width:2px,color:#fff
-	style B fill:#FFB74D,stroke:#333,stroke-width:2px,color:#333
-	style C fill:#64B5F6,stroke:#333,stroke-width:2px,color:#fff
-	style D fill:#F48FB1,stroke:#333,stroke-width:2px,color:#333
-	style E fill:#AED581,stroke:#333,stroke-width:2px,color:#333
-	style F fill:#BA68C8,stroke:#333,stroke-width:2px,color:#fff
-	style Docker_Environment fill:#f0f0f0,stroke:#666,stroke-dasharray:5 5,color:#333
+    style A fill:#4DB6AC,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#FFB74D,stroke:#333,stroke-width:2px,color:#333
+    style C fill:#64B5F6,stroke:#333,stroke-width:2px,color:#fff
+    style Gemini fill:#2196F3,stroke:#333,stroke-width:2px,color:#fff
+    style D fill:#F48FB1,stroke:#333,stroke-width:2px,color:#333
+    style E fill:#AED581,stroke:#333,stroke-width:2px,color:#333
+    style F fill:#BA68C8,stroke:#333,stroke-width:2px,color:#fff
+    style Docker_Environment fill:#f0f0f0,stroke:#666,stroke-dasharray:5 5,color:#333
 
-	A[Angular Web<br>Port 4200] -->|REST API| C[Java Spring<br>Backend<br>Port 8080]
-	B[React Native App<br>Port 8082] -->|REST API| C
+    A[Angular Web<br>Port 4200] -->|REST API| C[Java Spring Backend<br>Port 8080]
+    B[React Native App<br>Port 8082] -->|REST API| C
 
-	subgraph Docker_Environment [Ambiente Docker]
-		D[Docker Network]
-		E[MySQL<br>Port 3306]
-		F[phpMyAdmin<br>Port 8081]
+    C -->|Generazione task| Gemini[Google Gemini AI]
 
-		D --- E
-		D --- F
-	end
-	C --> D
+    subgraph Docker_Environment [Ambiente Docker]
+        D[Docker Network]
+        E[MySQL<br>Port 3306]
+        F[phpMyAdmin<br>Port 8081]
+
+        D --- E
+        D --- F
+    end
+
+    C --> D
 ```
 ---
 
 ## API Endpoints (REST)
 
+### Task Management
 | Metodo | Endpoint | Descrizione |
 | :--- | :--- | :--- |
 | **GET** | `/api/tasks` | Recupero tutti i task |
@@ -85,6 +93,11 @@ flowchart TB
 | **PATCH** | `/api/tasks/{id}` | Modifica completa dei campi di una task |
 | **PATCH** | `/api/tasks/{id}/status` | Update rapido dello status (TODO/DONE) |
 | **DELETE** | `/api/tasks/{id}` | Eliminazione definitiva di una task |
+
+### AI Generation
+| Metodo | Endpoint | Descrizione |
+| :--- | :--- | :--- |
+| **POST** | `/api/tasks/ai/generate` | Generazione automatica di task multipli tramite prompt |
 
 ---
 
@@ -140,6 +153,7 @@ npx expo start
 - Aggiornamento rapido dello status (TODO/DONE)
 - Aggiornamento completo dei campi
 - Paginazione lato server
+- AI Task Generation
 
 ### Frontend Web (Angular)
 - Visualizzazione task in tabella
@@ -152,6 +166,7 @@ npx expo start
 ### Frontend Mobile (React Native)
 - Visualizzazione task
 - Creazione task
+- Creazione task tramite AI
 - Visualizzazione singola task con modifica e cancellazione
 - Toggle rapido dello status tramite checkbox
 - Aggiornamento automatico della UI
@@ -190,4 +205,7 @@ npx expo start
 
 #### Modifica Task
 ![Edit Task Mobile](screenshots/task-edit-mobile.png)
+
+#### Genera Task con AI
+![Generate Task Mobile](screenshots/generate-task-mobile.png)
 

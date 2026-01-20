@@ -71,7 +71,6 @@ export default function TaskHomeScreen({ navigation }) {
     const newStatus = task.status === 'DONE' ? 'TODO' : 'DONE';
 
     try {
-      // Patch al backend
       await api.patch(`/tasks/${task.id}`, {
         status: newStatus
       });
@@ -147,11 +146,22 @@ export default function TaskHomeScreen({ navigation }) {
           </View>
         </View>
       </Modal>
-      {
-        filter === 'All' &&
-        <TaskButton onPress={() => setIsModalVisible(true)} />
-      }
 
+      {filter === 'All' && (
+        <View style={styles.buttonRow}>
+          <TaskButton
+            onPress={() => setIsModalVisible(true)}
+            buttonType="add"
+            buttonText="Nuova task"
+          />
+
+          <TaskButton
+            onPress={() => navigation.navigate('GenerateTaskAi')}
+            buttonType="sparkles-outline"
+            buttonText="Genera task"
+          />
+        </View>
+      )}
     </View>
   );
 }
@@ -178,5 +188,14 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 16,
     overflow: 'hidden',
     backgroundColor: '#ffffff'
+  },
+  buttonRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 12,
+    position: 'absolute',
+    bottom: 20,
+    width: '100%',
   },
 });

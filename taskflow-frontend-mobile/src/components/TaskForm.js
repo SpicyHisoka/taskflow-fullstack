@@ -75,17 +75,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingTop: 20,
     paddingBottom: 20,
-    backgroundColor: '#e3e8f2',   // lilla soft
+    backgroundColor: '#e3e8f2',
   },
   headerTitle: {
     flex: 1,
     textAlign: 'center',
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#2f2f3a',   // grigio antracite soft
+    color: '#2f2f3a',
   },
   button: {
-    backgroundColor: '#7b6cff',   // viola pastello
+    backgroundColor: '#7b6cff',
     paddingVertical: 10,
     paddingHorizontal: 18,
     borderRadius: 10,
