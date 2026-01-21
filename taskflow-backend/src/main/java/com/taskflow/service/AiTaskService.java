@@ -13,29 +13,29 @@ public class AiTaskService {
 	private final ChatClient chatClient;
 
 	public AiTaskService(ChatClient.Builder builder) {
-		// Configuriamo il client con un'istruzione di sistema (System Prompt)
-		this.chatClient = builder.defaultSystem("""
-				Sei un assistente AI specializzato nell'estrazione di attività (task).
-				Analizza il testo dell'utente e crea una lista di task strutturati.
+		this.chatClient = builder
+				.defaultSystem(
+						"""
+								Sei un estrattore di task automatico. Il tuo unico compito è restituire un array JSON valido.
 
-				Regole OBBLIGATORIE:
-				- Restituisci SOLO un array JSON valido, NIENTE altro testo prima/dopo.
-				- Ogni task ha esattamente questi campi: "id", "title", "description", "status".
-				- "id" è sempre "null"
-				- "status" è sempre "TODO"
-				- "title" chiaro ed emblematico
-				- "description" max 800 caratteri (descrizione della task da fare e tempo di esecuzione stimato, orari, scadenze, ecc).
-				- Chiudi sempre tutte le virgolette e parentesi quadre.
-				- Non interrompere a metà la risposta: completa l'array anche se è lungo.
+								REGOLE ASSOLUTE - VIOLARE QUALSIASI REGOLA RENDEREBBE L'OUTPUT INUTILE:
+								1. Output = SOLO array JSON. Niente testo prima, niente dopo, niente ```json, niente spiegazioni, niente thinking.
+								2. Inizia esattamente con [ e termina esattamente con ]
+								3. Ogni oggetto ha SOLO e soltanto queste 4 chiavi: "id", "title", "description", "status"
+								4. "id" deve essere sempre null (scrivi "null" senza virgolette)
+								5. "status" deve essere sempre "TODO" (stringa)
+								6. "title" → max 100 caratteri, frase imperativa molto chiara e concisa
+								7. "description" → max 700 caratteri. Includi: cosa fare esattamente + stima tempo (es. "2 ore") + eventuali scadenze/orari/luoghi/priorità se deducibili dal testo
+								8. Usa solo virgolette doppie ", mai singole. Sfuggi i caratteri speciali se necessario (\n → \\n)
+								9. Non troncare MAI l'array: se ci sono 7 task, scrivi tutti e 7
+								10. Non inventare campi extra, non aggiungere commenti
 
-				Esempio corretto:
-				[
-					{"id": "null","title":"Chiamare dentista","description":"Appuntamento ore 11","status":"TODO"},
-					{"id": "null","title":"Chiamare commercialista","description":"Appuntamento ore 13 dettagli casa","status":"TODO"}
-				]
+								Esempio di output corretto (non modificarlo):
+								[{"id":null,"title":"Prenotare visita oculista","description":"Chiamare studio Dr. Rossi entro venerdì, appuntamento preferibilmente martedì o mercoledì mattina, durata stimata 1 ora","status":"TODO"},{"id":null,"title":"Aggiornare CV","description":"Aggiungere esperienza 2025, rivedere sezione competenze, inviare a recruiter entro 20 gennaio, 3 ore totali","status":"TODO"}]
 
-				Inizia direttamente con [ e termina con ]
-				""").build();
+								Ora estrai i task dal testo dell'utente.
+						""")
+				.build();
 	}
 
 	public List<Task> parsePrompt(String userPrompt) {

@@ -24,9 +24,9 @@ import com.taskflow.service.TaskService;
 @RestController
 @RequestMapping("/api/tasks")
 @CrossOrigin(origins = {
-	    "http://localhost:4200",    // Per Angular
-	    "http://10.0.2.2",          // Per l'Emulatore Android Studio (fondamentale)
-	    "http://192.168.1.107"      // Per l'IP che hai visto nel terminale Expo
+	    "http://localhost:4200",
+	    "http://10.0.2.2",
+	    "http://192.168.1.107"
 	})
 public class TaskController {
 

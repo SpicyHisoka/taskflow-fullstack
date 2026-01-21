@@ -21,6 +21,9 @@ Il progetto si basa su un Backend condiviso tra Frontend Web e Frontend Mobile.
 
 ## Stack Tecnologico
 
+### AI
+- **Google AI**: Per la creazione automatizzata dei task
+
 ### Backend
 - **Java 17+** & **Spring Boot 3.4.1**
 - **Spring Ai**: Integrazione nativa per l'orchestrazione di modelli LLM
@@ -119,14 +122,34 @@ docker compose up -d
 ```
 - phpMyAdmin (UI database) disponibile su:: http://localhost:8081/
 
-### 2. Avvio Backend
+### 2. Configurazione AI
+Per utilizzare la funzione AI è necessario ottenere una **API Key** su [Google AI Studio](https://aistudio.google.com/api-keys)
+
+Per configurare la API Key ci sono due opzioni:
+- **Variabile d'ambiente (Consigliato)**: imposta una variabile d'ambiente sul tuo sistema operativo chiamata **GEMINI_API_KEY**
+
+```bash
+# Windows (PowerShell)
+setx GEMINI_API_KEY "tua_chiave_qui"
+
+# Linux / Mac
+export GEMINI_API_KEY="tua_chiave_qui"
+```
+
+- **File di configurazione**: Inserisci la chiave direttamente nel file `taskflow-backend/src/main/resources/application.properties`
+
+```properties
+spring.ai.google.genai.api-key=INSERIRE_QUI_LA_CHIAVE
+```
+
+### 3. Avvio Backend
 ```bash
 cd taskflow-backend
 mvn spring-boot:run
 ```
 - API REST disponibile su: http://localhost:8080/api/tasks
 
-### 3. Avvio Frontend Web
+### 4. Avvio Frontend Web
 ```bash
 cd taskflow-frontend-web
 npm install
@@ -134,7 +157,7 @@ ng serve
 ```
 - App disponibile su: http://localhost:4200
 
-### 4. Avvio Frontend Mobile
+### 5. Avvio Frontend Mobile
 ```bash
 cd taskflow-frontend-mobile
 npm install
@@ -171,6 +194,7 @@ npx expo start
 - Toggle rapido dello status tramite checkbox
 - Aggiornamento automatico della UI
 - Filtro task Todo e Done
+- Swipe per cancellazione task
 
 ---
 

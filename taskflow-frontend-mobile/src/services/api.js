@@ -17,4 +17,10 @@ export const generateAiTasks = async (userPrompt) => {
   }
 };
 
+export const updateTaskStatus = (id, status) => api.patch(`/tasks/${id}`, { status: status });
+
+export const updateTaskData = (id, title, description) => api.patch(`/tasks/${id}`, { title, description });
+
+export const deleteTaskById = (id) => api.delete(`/tasks/${id}`);
+
 export default api;

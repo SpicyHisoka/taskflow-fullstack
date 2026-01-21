@@ -9,11 +9,19 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import api from '../services/api';
+import { Swipeable, RectButton } from 'react-native-gesture-handler';
+import { Ionicons } from '@expo/vector-icons';
+import { LayoutAnimation, Platform, UIManager } from 'react-native';
+
+import api, { deleteTaskById, updateTaskStatus } from '../services/api';
 import TaskItem from '../components/TaskItem';
 import TaskButton from '../components/TaskButton';
 import TaskNavbar from '../components/TaskNavbar';
 import TaskForm from '../components/TaskForm';
+
+if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
 export default function TaskHomeScreen({ navigation }) {
   const [tasks, setTasks] = useState([]);
@@ -71,9 +79,7 @@ export default function TaskHomeScreen({ navigation }) {
     const newStatus = task.status === 'DONE' ? 'TODO' : 'DONE';
 
     try {
-      await api.patch(`/tasks/${task.id}`, {
-        status: newStatus
-      });
+      await updateTaskStatus(task.id, newStatus);
 
       setTasks(prevTasks =>
         prevTasks.map(t =>
@@ -97,17 +103,59 @@ export default function TaskHomeScreen({ navigation }) {
     return tasks;
   }
 
-  const renderTask = ({ item }) => (
-    <TouchableOpacity
-      activeOpacity={0.8}
-      onPress={() => navigation.navigate('Details', { task: item })}
-    >
-      <TaskItem
-        item={item}
-        onToggle={toggleTaskStatus}
-      />
-    </TouchableOpacity>
-  );
+  const handleDelete = (id) => {
+    try {
+      // 2. Prepariamo l'animazione "dolce"
+      // Questo dirà a React Native: "Qualsiasi cambiamento di layout accada dopo questa riga, animalo per 500ms"
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+      // Se vuoi personalizzare la durata ancora di più:
+      // LayoutAnimation.configureNext({...LayoutAnimation.Presets.easeInEaseOut, duration: 600});
+      
+      deleteTaskById(id);
+
+      // Aggiornamento UI!!
+      setTasks(prevTasks => prevTasks.filter(task => task.id !== id));
+    } catch (error) {
+      console.error('Errore durante eliminazione task', error);
+      Alert.alert("Errore", "Impossibile eliminare la task");
+    }
+  }
+
+  const renderTask = ({ item }) => {
+    // Azione di eliminazione
+    const renderRightActions = () => {
+      return (
+        <View
+          style={styles.deleteAction}
+        >
+          <Ionicons name="trash" size={28} color="white" />
+        </View>
+      );
+    };
+
+    return (
+      <Swipeable renderRightActions={renderRightActions}
+        onSwipeableOpen={(direction) => {
+          if (direction === 'right') {
+            handleDelete(item.id);
+          }
+        }}
+        friction={4}
+        rightThreshold={80}
+      >
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => navigation.navigate('Details', { task: item })
+          }
+        >
+          <TaskItem
+            item={item}
+            onToggle={toggleTaskStatus}
+          />
+        </TouchableOpacity>
+      </Swipeable>
+    );
+  };
 
   if (loading) {
     return (
@@ -198,4 +246,14 @@ const styles = StyleSheet.create({
     bottom: 20,
     width: '100%',
   },
+  deleteAction: {
+    backgroundColor: '#ee6d6d',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    paddingRight: 20,
+    marginVertical: 5,
+    marginHorizontal: 20,
+    borderRadius: 12,
+    flex: 1,
+  }
 });

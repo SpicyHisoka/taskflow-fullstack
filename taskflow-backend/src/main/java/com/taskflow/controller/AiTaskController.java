@@ -10,9 +10,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/tasks/ai")
 @CrossOrigin(origins = {
-	    "http://localhost:4200",    // Per Angular
-	    "http://10.0.2.2",          // Per l'Emulatore Android Studio (fondamentale)
-	    "http://192.168.1.107"      // Per l'IP che hai visto nel terminale Expo
+	    "http://localhost:4200", // Angular
+	    "http://10.0.2.2", // Emulatore android studio
+	    "http://192.168.1.107" // IP terminale expo
 	})public class AiTaskController {
 
     private final AiTaskService aiTaskService;
@@ -25,13 +25,11 @@ import java.util.List;
 
     @PostMapping("/generate")
     public List<Task> generateTasks(@RequestBody String prompt) {
-        // 1. L'IA interpreta il testo e crea gli oggetti Task
         List<Task> generatedTasks = aiTaskService.parsePrompt(prompt);
         
-        // 2. RESETTO GLI ID A NULL PER FORZARE INSERIMENTO
+        // Reset manuale degli ID a null per sicurezza
         generatedTasks.forEach( task -> task.setId(null));
         
-        // 3. Salviamo tutto nel database MySQL
         return taskRepository.saveAll(generatedTasks);
     }
 }

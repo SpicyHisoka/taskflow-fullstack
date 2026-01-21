@@ -1,7 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import { View, Text, StyleSheet, Alert, TextInput } from 'react-native';
-import api from '../services/api';
+import { deleteTaskById, updateTaskStatus, updateTaskData } from '../services/api';
 import TaskDetailsButton from '../components/TaskDetailsButton';
+
 
 const TaskDetails = ({ route, navigation }) => {
   const { task } = route.params;
@@ -16,7 +17,7 @@ const TaskDetails = ({ route, navigation }) => {
     const newStatus = status === 'DONE' ? 'TODO' : 'DONE';
 
     try {
-      await api.patch(`/tasks/${task.id}`, { status: newStatus });
+      await updateTaskStatus(task.id, newStatus);
       setStatus(newStatus);
     } catch (error) {
       console.error('Errore aggiornamento stato', error);
@@ -33,12 +34,12 @@ const TaskDetails = ({ route, navigation }) => {
 
   const saveEditedTask = async () => {
     try {
-      await api.patch(`/tasks/${task.id}`, { title, description });
+      await updateTaskData(task.id, title, description);
       setIsEditing(false);
       Alert.alert('Successo!', 'Task modificata correttamente');
     } catch (error) {
       console.error('Errore salvataggio task modificata', error);
-      Alert.error('Errore!', 'Impossibile salvare le modifiche, riprovare');
+      Alert.alert('Errore!', 'Impossibile salvare le modifiche, riprovare');
     }
   };
 
@@ -58,7 +59,7 @@ const TaskDetails = ({ route, navigation }) => {
             style: 'destructive',
             onPress: async () => {
               try {
-                await api.delete(`/tasks/${task.id}`);
+                await deleteTaskById(task.id);
                 navigation.goBack();
               } catch (err) {
                 console.error('Errore eliminazione', err);
