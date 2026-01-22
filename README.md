@@ -13,7 +13,7 @@
 ![Status](https://img.shields.io/badge/Status-In_Progress-orange?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)
 
-**TaskFlow** è una semplice applicazione Web Full-Stack per la gestione dei task, con la possiblità di generazione dei task tramite AI.<br>
+**TaskFlow** è una semplice applicazione Web Full-Stack per la gestione dei task, con la possibilità di generazione dei task tramite AI.<br>
 Il progetto si basa su un Backend condiviso tra Frontend Web e Frontend Mobile.
 
 - Web → **Angular 18+** (standalone components + signals)
@@ -27,7 +27,7 @@ Il progetto si basa su un Backend condiviso tra Frontend Web e Frontend Mobile.
 
 ### Backend
 - **Java 17+** & **Spring Boot 3.4.1**
-- **Spring Ai**: Integrazione nativa per l'orchestrazione di modelli LLM
+- **Spring AI**: Integrazione nativa per l'orchestrazione di modelli LLM
 - **Google Gemini AI**: Utilizzato per la generazione automatica dei task
 - **JPA**: Standard Java per salvare dati
 - **Hibernate**: Motore ORM per mappare classi e tabelle
@@ -92,16 +92,25 @@ flowchart TB
 | :--- | :--- | :--- |
 | **GET** | `/api/tasks` | Recupero tutti i task |
 | **GET** | `/api/tasks?page=0&size=20` | Recupero task con paginazione lato server |
-| **GET** | `/api/tasks/{id}` | Recupero dettaglio singola task |
+| **GET** | `/api/tasks/{id}` | Recupero dettaglio singolo task |
 | **POST** | `/api/tasks` | Creazione di una nuova task |
 | **PATCH** | `/api/tasks/{id}` | Modifica completa dei campi di una task |
-| **PATCH** | `/api/tasks/{id}/status` | Update rapido dello status (TODO/DONE) |
+| **PATCH** | `/api/tasks/{id}/status` | Aggiornamento rapido dello status (TODO/DONE) |
 | **DELETE** | `/api/tasks/{id}` | Eliminazione definitiva di una task |
 
 ### AI Generation
 | Metodo | Endpoint | Descrizione |
 | :--- | :--- | :--- |
 | **POST** | `/api/tasks/ai/generate` | Generazione automatica di task multipli tramite prompt |
+
+---
+
+## Sicurezza e Comunicazione (CORS)
+Per permettere al Frontend Web (Angular) e Mobile (React Native) di comunicare correttamente con il Backend, è stata implementata una policy CORS dinamica che abilita:
+
+- **Web**: Abilitato l'accesso per `http://localhost:4200`
+- **Mobile**: Accesso configurato per l'IP locale della workstation (necessario per il debug su dispositivi fisici tramite Expo Go) e per l'indirizzo standard dell'emulatore Android `10.0.2.2`
+- **Metodi**: Supporto completo per `GET`, `POST`, `PATCH`, `DELETE` e `OPTIONS`
 
 ---
 
@@ -121,7 +130,7 @@ Dalla cartella root del progetto, avvia i container per MySQL e phpMyAdmin:
 ```bash
 docker compose up -d
 ```
-- phpMyAdmin (UI database) disponibile su:: http://localhost:8081/
+- phpMyAdmin (UI database) disponibile su: http://localhost:8081/
 
 ### 2. Configurazione AI
 Per utilizzare la funzione AI è necessario ottenere una **API Key** su [Google AI Studio](https://aistudio.google.com/api-keys)
@@ -192,7 +201,7 @@ npx expo start
 - Visualizzazione task
 - Creazione task
 - Creazione task tramite AI
-- Visualizzazione singola task con modifica e cancellazione
+- Visualizzazione singolo task con modifica e cancellazione
 - Toggle rapido dello status tramite checkbox
 - Aggiornamento automatico della UI
 - Filtro task Todo e Done
