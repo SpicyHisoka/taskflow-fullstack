@@ -1,0 +1,42 @@
+<div class="container mt-4">
+  <div class="card shadow border-0 mb-4" style="border-radius: 16px; overflow: hidden;">
+
+    <div class="card-header d-flex align-items-center py-3"
+      style="background-color: #2f2f3a; color: white; border: none; padding-left: 12px; padding-right: 12px;">
+
+      <div class="d-flex align-items-center gap-3 w-100" style="height: 40px;">
+        <i class="bi bi-stars fs-4"></i>
+        <h2 class="mb-0 fw-semibold" style="font-size: 1.25rem; line-height: 1.2;">
+          Generatore Task con AI
+        </h2>
+      </div>
+    </div>
+
+    <div class="card-body p-4">
+      <p class="mb-4 small" style="color: #6b6f85;">
+        Descrivi le tue attività in linguaggio naturale, Gemini le organizzerà per te in task chiare e pronte all'uso.
+      </p>
+
+      <div class="mb-4">
+        <textarea class="form-control shadow-sm p-3"
+          style="border-radius: 12px; border: 1px solid #dee2e6; resize: none;" rows="4" [(ngModel)]="prompt"
+          [disabled]="isLoading()"
+          placeholder="Es: Domani alle 9 devo chiamare il cliente Rossi, poi fissare il meeting per venerdì e finire il report...">
+        </textarea>
+      </div>
+
+      <div class="d-flex justify-content-end">
+        <button class="btn d-flex align-items-center gap-2 px-4 py-2 fw-medium text-white shadow-sm"
+          [style.background-color]="(!prompt.trim() || isLoading()) ? '#cbd5e1' : '#7b6cff'"
+          style="border: none; border-radius: 10px; transition: all 0.2s;" (click)="handleGeneration()"
+          [disabled]="!prompt.trim() || isLoading()">
+
+          <span *ngIf="isLoading()" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          <i *ngIf="!isLoading()" class="bi bi-magic"></i>
+
+          {{ isLoading() ? 'Generazione in corso...' : 'Genera Task' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

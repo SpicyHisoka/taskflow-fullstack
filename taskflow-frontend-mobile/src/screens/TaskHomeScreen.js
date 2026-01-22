@@ -11,17 +11,12 @@ import {
 import { useFocusEffect } from '@react-navigation/native';
 import { Swipeable, RectButton } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
-import { LayoutAnimation, Platform, UIManager } from 'react-native';
 
 import api, { deleteTaskById, updateTaskStatus } from '../services/api';
 import TaskItem from '../components/TaskItem';
 import TaskButton from '../components/TaskButton';
 import TaskNavbar from '../components/TaskNavbar';
 import TaskForm from '../components/TaskForm';
-
-if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
-  UIManager.setLayoutAnimationEnabledExperimental(true);
-}
 
 export default function TaskHomeScreen({ navigation }) {
   const [tasks, setTasks] = useState([]);
@@ -105,15 +100,7 @@ export default function TaskHomeScreen({ navigation }) {
 
   const handleDelete = (id) => {
     try {
-      // 2. Prepariamo l'animazione "dolce"
-      // Questo dirà a React Native: "Qualsiasi cambiamento di layout accada dopo questa riga, animalo per 500ms"
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-      // Se vuoi personalizzare la durata ancora di più:
-      // LayoutAnimation.configureNext({...LayoutAnimation.Presets.easeInEaseOut, duration: 600});
-      
       deleteTaskById(id);
-
-      // Aggiornamento UI!!
       setTasks(prevTasks => prevTasks.filter(task => task.id !== id));
     } catch (error) {
       console.error('Errore durante eliminazione task', error);

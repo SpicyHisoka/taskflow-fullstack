@@ -181,6 +181,7 @@ npx expo start
 ### Frontend Web (Angular)
 - Visualizzazione task in tabella
 - Creazione, modifica ed eliminazione task
+- Creazione task tramite AI
 - Toggle rapido dello status
 - Aggiornamento automatico della UI
 - Gestione loading e lista vuota
@@ -209,6 +210,9 @@ npx expo start
 
 #### Creazione Task
 ![Create Task](screenshots/task-create.png)
+
+#### Genera Task con AI
+![Generate Task](screenshots/generate-task.png)
 
 #### Modifica Task
 ![Edit Task](screenshots/task-edit.png)

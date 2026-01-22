@@ -7,22 +7,29 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Alert,
+  Modal,
+  ActivityIndicator
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import { generateAiTasks } from '../services/api';
 
-export default function TaskAiScreen({ navigation }) {
+export default function TaskAi({ navigation }) {
   const [prompt, setPrompt] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleGenerate = async () => {
+    setIsLoading(true);
     try {
       await generateAiTasks(prompt);
-      Alert.alert("Successo!", "Task generate");
-      navigation.navigate('Home');
+      Alert.alert("Successo!", "Task generate",
+        [{ text: 'OK', onPress: () => navigation.navigate('Home') }]
+      );
 
     } catch (error) {
       Alert.alert("Errore", error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -31,6 +38,18 @@ export default function TaskAiScreen({ navigation }) {
       behavior={'height'}
       style={styles.container}
     >
+      {isLoading && (
+        <View style={styles.loadingOverlay}>
+          <View style={styles.loadingCard}>
+            <ActivityIndicator size="large" color="#7b6cff" />
+            <Text style={styles.loadingTitle}>Gemini sta lavorando</Text>
+            <Text style={styles.loadingSubtitle}>
+              Sto trasformando i tuoi pensieri in task organizzati
+            </Text>
+          </View>
+        </View>
+      )}
+
       <View style={styles.content}>
         <Text style={styles.title}>Cosa devi fare oggi?</Text>
         <Text style={styles.subtitle}>
@@ -53,16 +72,17 @@ export default function TaskAiScreen({ navigation }) {
         <TouchableOpacity
           style={[
             styles.generateButton,
-            !prompt.trim() && styles.generateButtonDisabled,
+            (!prompt.trim() || isLoading) && styles.generateButtonDisabled,
           ]}
           onPress={handleGenerate}
-          disabled={!prompt.trim()}
+          disabled={!prompt.trim() || isLoading}
           activeOpacity={0.85}
         >
           <Ionicons name="sparkles-outline" size={20} color="#ffffff" />
           <Text style={styles.buttonText}>Genera Task con AI</Text>
         </TouchableOpacity>
       </View>
+
     </KeyboardAvoidingView>
   );
 }
@@ -71,6 +91,43 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f4f7fb',
+  },
+  loadingOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.65)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 9999,
+  },
+  loadingCard: {
+    width: '85%',
+    backgroundColor: '#ffffff',
+    borderRadius: 24,
+    padding: 30,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.3,
+    shadowRadius: 20,
+    elevation: 10,
+  },
+  loadingTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#333844',
+    marginTop: 20,
+    textAlign: 'center',
+  },
+  loadingSubtitle: {
+    fontSize: 14,
+    color: '#6b6f85',
+    textAlign: 'center',
+    marginTop: 10,
+    lineHeight: 20,
   },
   content: {
     flex: 1,

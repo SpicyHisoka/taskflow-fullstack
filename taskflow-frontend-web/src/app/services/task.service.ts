@@ -23,6 +23,10 @@ export class TaskService {
     return this.http.post<Task>(this.apiUrl, task);
   }
 
+  generateAiTask(userPrompt: String) {
+    return this.http.post<Task[]>(`${this.apiUrl}/ai/generate`, { prompt: userPrompt });
+  }
+
   deleteTask(taskId: number) {
     return this.http.delete<void>(`${this.apiUrl}/${taskId}`);
   }
