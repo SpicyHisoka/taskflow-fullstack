@@ -15,26 +15,48 @@ public class AiTaskService {
 	public AiTaskService(ChatClient.Builder builder) {
 		this.chatClient = builder
 				.defaultSystem(
-						"""
-								Sei un estrattore di task automatico. Il tuo unico compito è restituire un array JSON valido.
+					"""
+					    Sei un estrattore automatico di task da testo naturale.
+						Il tuo unico compito è identificare tutte le azioni/task implicite o esplicite nel messaggio dell'utente e restituirle come array JSON.
 
-								REGOLE ASSOLUTE - VIOLARE QUALSIASI REGOLA RENDEREBBE L'OUTPUT INUTILE:
-								1. Output = SOLO array JSON. Niente testo prima, niente dopo, niente ```json, niente spiegazioni, niente thinking.
-								2. Inizia esattamente con [ e termina esattamente con ]
-								3. Ogni oggetto ha SOLO e soltanto queste 4 chiavi: "id", "title", "description", "status"
-								4. "id" deve essere sempre null (scrivi "null" senza virgolette)
-								5. "status" deve essere sempre "TODO" (stringa)
-								6. "title" → max 100 caratteri, frase imperativa molto chiara e concisa
-								7. "description" → max 700 caratteri. Includi: cosa fare esattamente + stima tempo (es. "2 ore") + eventuali scadenze/orari/luoghi/priorità se deducibili dal testo
-								8. Usa solo virgolette doppie ", mai singole. Sfuggi i caratteri speciali se necessario (\n → \\n)
-								9. Non troncare MAI l'array: se ci sono 7 task, scrivi tutti e 7
-								10. Non inventare campi extra, non aggiungere commenti
+						OUTPUT FORMAT
+						Devi restituire SOLO un array JSON valido [].
+						Ogni elemento è un oggetto con esattamente queste chiavi:
+						 - "id": sempre null
+						 - "title": stringa, max 100 caratteri, imperativo, conciso, azione chiara (es. "Chiamare fornitore")
+						 - "description": stringa, max 700 caratteri. Deve contenere:
+						   • cosa fare precisamente
+						   • stima realistica del tempo (es. "30 min", "2 ore")
+						   • scadenze, orari, luoghi, priorità o dipendenze se deducibili dal testo
+						 - "status": sempre "TODO"
 
-								Esempio di output corretto (non modificarlo):
-								[{"id":null,"title":"Prenotare visita oculista","description":"Chiamare studio Dr. Rossi entro venerdì, appuntamento preferibilmente martedì o mercoledì mattina, durata stimata 1 ora","status":"TODO"},{"id":null,"title":"Aggiornare CV","description":"Aggiungere esperienza 2025, rivedere sezione competenze, inviare a recruiter entro 20 gennaio, 3 ore totali","status":"TODO"}]
+						VINCOLI
+						 - Non aggiungere campi extra
+						 - Non inventare task che non siano nel testo
+						 - Non troncare: estrai tutti i task presenti
+						 - Usa solo virgolette doppie ", sfuggi caratteri speciali se necessario (\n → \\n)
 
-								Ora estrai i task dal testo dell'utente.
-						""")
+						ESEMPI
+
+						Testo: Devo chiamare il commercialista entro venerdì e aggiornare il bilancio trimestrale. Poi fissare appuntamento dentista per la prossima settimana, ci vorrà circa un'ora.
+
+						Output:
+						 [
+						  {"id":null,"title":"Chiamare commercialista","description":"Contattare entro venerdì per appuntamento, priorità alta","status":"TODO"},
+						  {"id":null,"title":"Aggiornare bilancio trimestrale","description":"Revisionare entrate/uscite Q4 2025, stimato 4 ore","status":"TODO"},
+						  {"id":null,"title":"Fissare appuntamento dentista","description":"Prenotare per prossima settimana, durata stimata 1 ora","status":"TODO"}
+						 ]
+
+						Testo: Domani compro pane, latte e uova. Entro fine mese devo finire il corso Python online (rimangono 8 ore).
+
+						Output:
+						 [
+						  {"id":null,"title":"Fare la spesa","description":"Comprare pane, latte e uova domani mattina, 20 minuti","status":"TODO"},
+						  {"id":null,"title":"Completare corso Python","description":"Finire le ultime 8 ore di lezioni entro fine mese, priorità media","status":"TODO"}
+						 ]
+
+						Ora estrai tutti i task dal seguente testo dell'utente:
+					""")
 				.build();
 	}
 
