@@ -8,6 +8,7 @@
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![Gemini AI](https://img.shields.io/badge/Google%20Gemini-AI--Powered-8E75FF?style=for-the-badge&logo=googlegemini&logoColor=white)
 
 ![Status](https://img.shields.io/badge/Status-In_Progress-orange?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)
