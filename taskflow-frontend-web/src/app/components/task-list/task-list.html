@@ -9,27 +9,42 @@
         <table class="table table-hover align-middle mb-4">
           <thead class="table-primary">
             <tr class="text-center">
-              <th style="width: 50px;">ID</th>
-              <th style="width: 180px;">Titolo</th>
-              <th style="width: 400px;">Descrizione</th>
-              <th style="width: 120px;">Stato</th>
-              <th style="width: 150px;">Azioni</th>
+              <th style="width: 60px;">ID</th>
+              <th style="width: 220px;">Titolo</th>
+              <th style="width: 320px;">Descrizione</th>
+              <th style="width: 140px;">Scadenza</th>
+              <th style="width: 90px;">Priority</th>
+              <th style="width: 90px;">Stato</th>
+              <th style="width: 120px;">Azioni</th>
             </tr>
           </thead>
           <tbody>
             <tr class="text-center" *ngFor="let task of taskList()">
               <td>{{ task.id }}</td>
+
               <td class="title clickable" [routerLink]="['/tasks/task', task.id]">
                 <strong>{{ task.title }}</strong>
               </td>
+
               <td class="description clickable" [routerLink]="['/tasks/task', task.id]">
-                {{ task.description }}
+                {{ task.description ? task.description : '-'}}
               </td>
+
+              <td class="deadline clickable" [routerLink]="['/tasks/task', task.id]">
+                {{ task.deadline ? (task.deadline | date:'dd/MM/yyyy') : '-' }}
+              </td>
+
+              <td class="priority clickable" [style.color]="getPriorityColor(task.priority)"
+                [routerLink]="['/tasks/task', task.id]">
+                <strong>{{ getPriorityEclamation(task.priority) }}</strong>
+              </td>
+
               <td>
                 <span class="badge clickable shadow-sm" [ngStyle]="{
                     'background-color': task.status === 'TODO' ? '#f7eb7c' : '#8aeb9c',
                     'color': 'black'
-                  }" style="border-radius: 8px; padding: 0.5rem 0.8rem;" (click)="updateStatus(task)">
+                    }" 
+                    style="border-radius: 8px; padding: 0.5rem 0.8rem;" (click)="updateStatus(task)">
                   {{ task.status }}
                 </span>
               </td>
@@ -45,7 +60,7 @@
                 </button>
 
                 <a [routerLink]="['/tasks/edit', task.id]" class="btn btn-sm"
-                  style="background-color: #adcae9; border: none; border-radius: 8px;">
+                  style="background-color: #978cfd; border: none; border-radius: 8px;">
                   <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none">
                     <path
                       d="M17.0671 2.27157C17.5 2.09228 17.9639 2 18.4324 2C18.9009 2 19.3648 2.09228 19.7977 2.27157C20.2305 2.45086 20.6238 2.71365 20.9551 3.04493C21.2864 3.37621 21.5492 3.7695 21.7285 4.20235C21.9077 4.63519 22 5.09911 22 5.56761C22 6.03611 21.9077 6.50003 21.7285 6.93288C21.5492 7.36572 21.2864 7.75901 20.9551 8.09029L20.4369 8.60845L15.3916 3.56308L15.9097 3.04493C16.241 2.71365 16.6343 2.45086 17.0671 2.27157Z"
@@ -62,8 +77,9 @@
 
         <div class="d-flex justify-content-between align-items-center mt-3">
           <div class="text-secondary small">
-            Pagina <strong>{{ totalPages() === 0 ? '-' : currentPage + 1 }}</strong> di
+            Pagina <strong>{{ totalPages() === 0 ? '0' : currentPage + 1 }}</strong> di
             <strong>{{ totalPages() }}</strong>
+            - {{ totalElements() }} task totali
           </div>
 
           <nav class="mb-2" aria-label="Navigazione pagine">

@@ -1,64 +1,110 @@
 package com.taskflow.model;
 
+import java.time.LocalDateTime;
+
+import com.taskflow.enums.Priority;
+import com.taskflow.enums.TaskStatus;
+
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tasks")
 public class Task {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 
-	@Column(nullable = false)
-	private String title;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Column(length = 800)
-	private String description;
+    @Column(nullable = false)
+    private String title;
 
-	@Column(nullable = false)
-	private String status; // 'TODO' or 'DONE'
+    @Column(length = 800)
+    private String description;
 
-	public Long getId() {
-		return id;
-	}
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TaskStatus status = TaskStatus.TODO;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @Column(columnDefinition = "DATETIME")
+    private LocalDateTime deadline;
 
-	public String getTitle() {
-		return title;
-	}
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Priority priority = Priority.MEDIUM;
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
-	public String getDescription() {
-		return description;
-	}
+    @Column(name = "estimated_time_minutes")
+    private Integer estimatedTimeMinutes;
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    // Callback JPA
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    // Costruttore
+    public Task() {
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public Task() {
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public Task(Long id, String title, String description, String status) {
-		super();
-		this.id = id;
-		this.title = title;
-		this.description = description;
-		this.status = status;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public TaskStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(TaskStatus status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(LocalDateTime deadline) {
+        this.deadline = deadline;
+    }
+
+    public Priority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Priority priority) {
+        this.priority = priority;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public Integer getEstimatedTimeMinutes() {
+        return estimatedTimeMinutes;
+    }
+
+    public void setEstimatedTimeMinutes(Integer estimatedTimeMinutes) {
+        this.estimatedTimeMinutes = estimatedTimeMinutes;
+    }
 }

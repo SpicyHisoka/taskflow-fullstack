@@ -31,7 +31,7 @@ export class TaskEdit implements OnInit {
     this.taskService.updateTask(this.task().id, this.task()).subscribe({
       next: () => {
         console.log('Task aggiornato con successo')
-        this.router.navigate(['/tasks']);
+        this.router.navigate([`/tasks/task/${this.task().id}`]);
       },
       error: (err) => {
         console.log('Errore invio task', err);
@@ -40,6 +40,6 @@ export class TaskEdit implements OnInit {
   }
 
   onCancel() {
-    this.router.navigate(['/tasks']);
+    this.router.navigate([`/tasks/task/${this.task().id}`]);
   }
 }

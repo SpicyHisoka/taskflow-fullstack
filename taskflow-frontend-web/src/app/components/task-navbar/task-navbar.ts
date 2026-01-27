@@ -10,9 +10,9 @@ import { RouterLink } from '@angular/router';
   styleUrl: './task-navbar.css',
 })
 export class TaskNavbar {
-  private taskService = inject(TaskService);
+  // private taskService = inject(TaskService);
 
-  homeClick() {
-    this.taskService.resetToFirstPage();
-  }
+  // homeClick() {
+  //   this.taskService.resetToFirstPage();
+  // }
 }

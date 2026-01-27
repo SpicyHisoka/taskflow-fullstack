@@ -1,3 +1,11 @@
 .navbar {
   border-radius: 5px 5px 0 0;
 }
+
+.container .card {
+  min-height: 450px;
+}
+
+.task-footer {
+  margin-top: auto;
+}

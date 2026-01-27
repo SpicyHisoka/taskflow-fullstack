@@ -25,7 +25,12 @@
         </textarea>
       </div>
 
-      <div class="d-flex justify-content-end">
+      <div class="d-flex justify-content-end gap-2 mt-4">
+        <button type="button" class="btn px-4 py-2 fw-medium text-white"
+          style="background-color: #ee6d6d; border: none; border-radius: 10px; transition: opacity 0.2s;"
+          (click)="onCancel()">
+          Annulla
+        </button>
         <button class="btn d-flex align-items-center gap-2 px-4 py-2 fw-medium text-white shadow-sm"
           [style.background-color]="(!prompt.trim() || isLoading()) ? '#cbd5e1' : '#7b6cff'"
           style="border: none; border-radius: 10px; transition: all 0.2s;" (click)="handleGeneration()"

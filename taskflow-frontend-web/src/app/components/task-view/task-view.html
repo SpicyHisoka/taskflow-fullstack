@@ -19,8 +19,43 @@
       </div>
     </nav>
 
-    <div class="card-body p-4">
-      <p style="color: #6b6f85; line-height: 1.6;">{{ task().description }}</p>
+    <div class="card-body p-4 d-flex flex-column">
+
+      <p [style.color]="task().description ? '#6b6f85' : '#d1d1d1'" style="line-height: 1.6;">
+        {{ task().description ? task().description : 'Nessuna descrizione fornita'}}
+      </p>
+
+      <!-- BLOCCO CHE VA IN FONDO -->
+      <div class="task-footer">
+        <div class="col-12">
+          <div class="row g-3 text-muted small">
+
+            <div class="col-12 col-md-6 col-lg-3">
+              <strong>Creata il</strong><br>
+              {{ task().createdAt | date:'dd/MM/yyyy HH:mm' }}
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-3">
+              <strong>Scadenza</strong><br>
+              {{ task()?.deadline
+              ? (task().deadline | date:'dd/MM/yyyy HH:mm')
+              : 'X' }}
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-3">
+              <strong>Durata stimata</strong><br>
+              {{ formattedDuration() }}
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-3">
+              <strong>Priorità</strong><br>
+              {{ task().priority }}
+            </div>
+
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
   } @else {

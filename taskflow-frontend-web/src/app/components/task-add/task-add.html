@@ -3,7 +3,6 @@
 
     <div class="card-header d-flex align-items-center py-3"
       style="background-color: #2f2f3a; color: white; border: none; padding-left: 24px; padding-right: 24px;">
-
       <div class="d-flex align-items-center w-100" style="height: 40px;">
         <h2 class="mb-0 fw-semibold" style="font-size: 1.25rem; line-height: 1.2;">
           Nuova Task
@@ -23,9 +22,36 @@
 
         <div class="mb-3">
           <label class="form-label small fw-bold" style="color: #6b6f85;">Descrizione</label>
-          <textarea class="form-control shadow-sm" name="description" rows="4" maxlength="800"
+          <textarea class="form-control shadow-sm" name="description" rows="3" maxlength="800"
             style="border-radius: 12px; border: 1px solid #dee2e6; padding: 0.75rem; resize: none;"
             [(ngModel)]="newTask.description"></textarea>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label small fw-bold" style="color: #6b6f85;">Priorità</label>
+            <select class="form-select shadow-sm" name="priority"
+              style="border-radius: 12px; border: 1px solid #dee2e6; padding: 0.75rem;"
+              [(ngModel)]="newTask.priority">
+              <option value="LOW">Bassa</option>
+              <option value="MEDIUM">Media</option>
+              <option value="HIGH">Alta</option>
+            </select>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label small fw-bold" style="color: #6b6f85;">Tempo Stimato (minuti)</label>
+            <input type="number" class="form-control shadow-sm" name="estimatedTimeMinutes"
+              style="border-radius: 12px; border: 1px solid #dee2e6; padding: 0.75rem;"
+              [(ngModel)]="newTask.estimatedTimeMinutes" placeholder="es. 30">
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label small fw-bold" style="color: #6b6f85;">Scadenza (Deadline)</label>
+          <input type="datetime-local" class="form-control shadow-sm" name="deadline"
+            style="border-radius: 12px; border: 1px solid #dee2e6; padding: 0.75rem;"
+            [(ngModel)]="newTask.deadline">
         </div>
 
         <div class="d-flex justify-content-end gap-2 mt-4">

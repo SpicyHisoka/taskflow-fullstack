@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 //import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.taskflow.enums.TaskStatus;
 import com.taskflow.model.Task;
 import com.taskflow.repository.TaskRepository;
 
@@ -46,17 +47,21 @@ public class TaskService {
 		Task existing = repository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Task non trovato con id " + id));
 
-		if (updatedTask.getTitle() != null) {
-			existing.setTitle(updatedTask.getTitle());
-		}
+		if (updatedTask.getTitle() != null) existing.setTitle(updatedTask.getTitle());
 
-		if (updatedTask.getDescription() != null) {
-			existing.setDescription(updatedTask.getDescription());
-		}
+		if (updatedTask.getDescription() != null) existing.setDescription(updatedTask.getDescription());
 
-		if (updatedTask.getStatus() != null) {
-			existing.setStatus(updatedTask.getStatus());
+		if (updatedTask.getStatus() != null) existing.setStatus(updatedTask.getStatus());
+		
+		if (updatedTask.getDeadline() != null) existing.setDeadline(updatedTask.getDeadline());
+		
+		if (updatedTask.getEstimatedTimeMinutes() != null) {
+			existing.setEstimatedTimeMinutes(updatedTask.getEstimatedTimeMinutes() > 0 
+					? updatedTask.getEstimatedTimeMinutes()
+					: 0);
 		}
+				
+		if (updatedTask.getPriority() != null) existing.setPriority(updatedTask.getPriority());
 
 		return repository.save(existing);
 	}
@@ -64,8 +69,13 @@ public class TaskService {
 	public Task patchStatus(Long id, String string) {
 		Task task = repository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Task non trovato con id " + id));
-
-		task.setStatus(string);
+		
+		try {
+			TaskStatus newStatus = TaskStatus.valueOf(string.toUpperCase());
+			task.setStatus(newStatus);
+		} catch (IllegalArgumentException e) {
+	        throw new RuntimeException("Status non valido: " + string);
+	    }
 
 		return repository.save(task);
 	}

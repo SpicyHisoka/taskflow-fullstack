@@ -2,7 +2,7 @@ import { Component, effect, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { CreateTask, Task } from '../../models/task.model';
+import { CreateTask, Priority, Task } from '../../models/task.model';
 import { TaskService } from '../../services/task.service';
 import { TaskNavbar } from '../task-navbar/task-navbar';
 
@@ -24,7 +24,10 @@ export class TaskList {
   newTask: CreateTask = {
     title: '',
     description: '',
-    status: 'TODO'
+    status: 'TODO',
+    priority: Priority.MEDIUM,
+    deadline: '',
+    estimatedTimeMinutes: 0
   }
 
   private taskService = inject(TaskService);
@@ -66,7 +69,10 @@ export class TaskList {
           this.newTask = {
             title: '',
             description: '',
-            status: 'TODO'
+            status: 'TODO',
+            priority: Priority.MEDIUM,
+            deadline: '',
+            estimatedTimeMinutes: 0
           };
           console.log('Task salvato!', savedTask);
         },
@@ -102,5 +108,23 @@ export class TaskList {
         console.log('Errore durante la modifica dello status', err);
       }
     });
+  }
+
+  getPriorityEclamation(priority: string) {
+    switch (priority.toUpperCase()) {
+      case 'LOW': return '!';
+      case 'MEDIUM': return '!!';
+      case 'HIGH': return '!!!';
+      default: return '';
+    }
+  }
+
+  getPriorityColor(priority: string) {
+    switch (priority.toUpperCase()) {
+      case 'LOW': return '#28a745';
+      case 'MEDIUM': return '#ffc107';
+      case 'HIGH': return '#dc3545';
+      default: return '#6c757d';
+    }
   }
 }
